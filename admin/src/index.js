@@ -1,7 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const config = require("config")
-const request = require("request")
 const axios = require("axios")
 const {processInvestmentReport} = require("./investments")
 const {convDataArrToCsv} = require("./util/utility")
@@ -10,19 +9,24 @@ const app = express()
 
 app.use(bodyParser.json({limit: "10mb"}))
 
-app.get("/investments/:id", (req, res) => {
+app.get("/investments/:id", async (req, res) => {
   const {id} = req.params
-  request.get(
-    `${config.investmentsServiceUrl}/investments/${id}`,
-    (e, r, investments) => {
-      if (e) {
-        console.error(e)
-        res.send(500)
-      } else {
-        res.send(investments)
-      }
-    },
-  )
+  try {
+    const investments = await axios.get(
+      `${config.investmentsServiceUrl}/investments/${id}`,
+    )
+
+    if (!investments) {
+      throw new Error()
+    }
+
+    res.send(investments.data)
+  } catch (err) {
+    console.error("Error retrieving investments", err)
+    res
+      .status(500)
+      .send("Problem retrieving investments, please try again later")
+  }
 })
 
 app.get("/report", async (req, res) => {
