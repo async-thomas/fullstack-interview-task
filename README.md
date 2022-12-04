@@ -61,6 +61,14 @@ The services will try to use ports 8081, 8082 and 8083
 
 Use Postman or any API tool of you choice to trigger your endpoints (this is how we will test your new route).
 
+## Testing
+
+To run the test suite, run the following locally in the `/admin` directory
+
+```bash
+npm run test
+```
+
 ### Existing routes
 We have provided a series of routes 
 
@@ -75,3 +83,4 @@ Financial Companies - localhost:8082
 
 Admin - localhost:8083
 - `/investments/:id` get an investment record by id
+- `/report` generate a csv investments report and POST csv data to `/investments/export`
