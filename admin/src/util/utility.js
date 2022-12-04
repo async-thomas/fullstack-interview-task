@@ -1,13 +1,14 @@
-const convDataArrToCsv = (dataArr) => {
-  const csvDataArr = []
-  dataArr.forEach((arr) => {
-    const dataRowArr = arr.map((item) => JSON.stringify(item))
-    const dataRow = dataRowArr.join(",")
-    csvDataArr.push(dataRow)
-  })
+const R = require("ramda")
 
-  const csvData = csvDataArr.join("\n")
-  return csvData
-}
+const convDataArrToCsv = (dataArr) =>
+  R.pipe(
+    R.map((row) =>
+      R.pipe(
+        R.map((item) => JSON.stringify(item)),
+        R.join(","),
+      )(row),
+    ),
+    R.join("\n"),
+  )(dataArr)
 
 module.exports.convDataArrToCsv = convDataArrToCsv
