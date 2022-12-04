@@ -107,3 +107,6 @@ Admin - localhost:8083
 - Connect the endpoints to a database.
 - Add additional endpoints for other services.
 - Learn more about Ramda.
+
+## Please Note
+This is a throwaway GitHub. My GitHub can be found at: https://github.com/mint-made
