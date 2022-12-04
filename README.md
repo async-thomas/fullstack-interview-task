@@ -84,3 +84,26 @@ Financial Companies - localhost:8082
 Admin - localhost:8083
 - `/investments/:id` get an investment record by id
 - `/report` generate a csv investments report and POST csv data to `/investments/export`
+
+## Questions
+
+### How might you make this service more secure?
+- Add controls to limit the IP addresses that requests can come from.
+- Use authentication to identify who is accessing each resource before returning a response.
+- Set authorization requirements for each endpoint and after a user has been authenticated, ensure the user has sufficient privileges to access the resource.
+- Use API keys and ensure all keys are saved securely, e.g. not commiting to github repos, writing in text files on computers etc.
+- Take appropriate precautions against CSRF such as implementing CSRF tokens.
+- If JWTs are implemented, ensure that they are not stored on any client local storage making them vulnerable to XSS attacks and instead store them inside a httpOnly cookie.
+- Use https.
+
+### How would you make this solution scale to millions of records?
+- Connect the service directly to a database of the investments and companies if possible.
+- If the list of companies or investments becomes large, it will be important to request the data in parts, for example implementing pagination that limits the size of each request.
+- Implement a queue based system and break the report generation down into smaller chunks that can be processed concurrently.
+- Add more resilience into the system to ensure that any miformatted data is identified before producing unwanted side effects. Type validation such as Joi, could be employed to ensure data types are correct.
+
+### What else would you have liked to improve given more time?
+- Add testing for the API endpoints.
+- Connect the endpoints to a database.
+- Add additional endpoints for other services.
+- Learn more about Ramda.
